@@ -13,7 +13,7 @@ RUN apt-get update && \
 	curl 
 	
 # Install extra software
-RUN	apt-get install -qy python python-dev \
+RUN apt-get install -qy python python-dev \
 	ruby-full \
 	vim	
 
@@ -32,17 +32,8 @@ RUN source /etc/profile.d/nvm.sh && \
 	nvm install 6 && \
 	nvm alias default 5
 
-# Give permissions to everybody for nvm
+# update NVM folder permissions
 RUN chmod ugo=rwx -R /usr/local/nvm
-
-# Add a simple user
-RUN useradd -ms /bin/bash user && mkhomedir_helper user
-USER user
-WORKDIR /home/user
-
-# Login as root
-USER root
-WORKDIR /
 
 ENTRYPOINT ["/bin/bash", "--login", "-i", "-c"]
 CMD ["bash"]
